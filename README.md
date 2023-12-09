@@ -4,6 +4,8 @@ This is the starter template for the Next.js App Router Course. It contains the 
 
 For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
 
+___
+
 ## 1 getting started
 ### 1.1. installation du projet etinstall dependencies
 ```bash
@@ -14,6 +16,7 @@ npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.
 
 ![Alt text](image.png)
 
+___
 
 ## 2 css styling
 ### 2.1. comment ajouter un css tailwind
@@ -22,6 +25,8 @@ npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.
   voir code
 ### 2.3. Using the clsx library to toggle class names
   https://github.com/lukeed/clsx
+
+___
 
 ## 3. Optimizing Fonts and Images
 ### 3.1. pour mesurer l'efficacité de font
@@ -58,6 +63,8 @@ npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.
 
 ```
 
+
+
 ### 3.2. Adding a secondary font
  - voir les codes
  - comment faire :
@@ -67,9 +74,60 @@ https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-mul
 https://nextjs.org/docs/app/api-reference/components/font#font-function-arguments
 
 
+### 3.3 Optimizing Images
+
+> /app/page.tsx
+```{.typescript .numberLines .lineAnchors highlight=[5,12-18]} 
+
+  import AcmeLogo from '@/app/ui/acme-logo';
+  import { ArrowRightIcon } from '@heroicons/react/24/outline';
+  import Link from 'next/link';
+  import { lusitana } from '@/app/ui/fonts';
+  import Image from 'next/image';
+  
+  export default function Page() {
+    return (
+      // ...
+      <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
+        {/* Add Hero Images Here */}
+        <Image
+          src="/hero-desktop.png"
+          width={1000}
+          height={760}
+          className="hidden md:block"
+          alt="Screenshots of the dashboard project showing desktop version"
+        />
+      </div>
+      //...
+    );
+  }
+
+```
+
+### 3.4 Lecture 
+  - Image Optimization Docs : https://nextjs.org/docs/app/building-your-application/optimizing/images
+  - Font Optimization Docs : https://nextjs.org/docs/app/building-your-application/optimizing/fonts
+  - Improving Web Performance with Images (MDN) : https://developer.mozilla.org/en-US/docs/Learn/Performance/Multimedia
+  - Web Fonts (MDN) : https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts
+
+
+___
+
+## 4. Creating Layouts and Pages
+
+
+
+
+
+
+***
 
 
 # Autre ressources
 ## pour markdown syntaxe
 https://shd101wyy.github.io/markdown-preview-enhanced/#/markdown-basics?id=line-numbers
+https://www.markdownguide.org/basic-syntax/
+
+## astuce et raccourcis clavier markdown
+https://thinkr.fr/r-markdown-les-petits-trucs-qui-changent-la-vie/
 
