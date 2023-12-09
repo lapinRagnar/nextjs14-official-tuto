@@ -17,7 +17,15 @@ npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.
 
 ## 2 css styling
 ### 2.1. comment ajouter un css tailwind
-
+  voir code
 ### 2.2. comment ajouter un css module
+  voir code
+### 2.3. Using the clsx library to toggle class names
+  https://github.com/lukeed/clsx
+
+## 3. routing
+### 3.1. routing with nextjs
+  voir code
+
 
 
