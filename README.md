@@ -136,7 +136,11 @@ This is how you can create different pages in Next.js: create a new route segmen
 
 By having a special name for page files, Next.js allows you to colocate UI components, test files, and other related code with your routes. Only the content inside the page file will be publicly accessible. For example, the /ui and /lib folders are colocated inside the /app folder along with your routes.
 
+### c.  Creating the dashboard pages
+Let's practice creating more routes. In your dashboard, create two more pages:
 
+Customers Page: The page should be accessible on http://localhost:3000/dashboard/customers. For now, it should return a `<p>Customers Page</p>` element.
+Invoices Page: The invoices page should be accessible on http://localhost:3000/dashboard/invoices. For now, also return a `<p>Invoices Page</p> `element.
 
 
 
