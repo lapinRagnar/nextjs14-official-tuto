@@ -16,4 +16,8 @@ npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.
 
 
 ## 2 css styling
+### 2.1. comment ajouter un css tailwind
+
+### 2.2. comment ajouter un css module
+
 
