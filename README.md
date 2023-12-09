@@ -115,6 +115,35 @@ ___
 
 ## 4. Creating Layouts and Pages
 
+### a. Creating the dashboard page
+Create a new folder called dashboard inside /app. Then, create a new page.tsx file inside the dashboard folder with the following content:
+
+
+> /app/dashboard/page.tsx
+```{.typescript .numberLines .lineAnchors highlight=[5,12-18]} 
+
+  export default function Page() {
+    return <p>Dashboard Page</p>;
+  }
+
+```
+
+### b. ensuite on peut visiter le lien
+> http://localhost:3000/dashboard
+
+This is how you can create different pages in Next.js: create a new route segment using a folder, and add a page file inside it.
+
+
+By having a special name for page files, Next.js allows you to colocate UI components, test files, and other related code with your routes. Only the content inside the page file will be publicly accessible. For example, the /ui and /lib folders are colocated inside the /app folder along with your routes.
+
+
+
+
+
+
+
+
+
 
 
 
