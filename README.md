@@ -307,6 +307,44 @@ export default function NavLinks() {
 
 Save and check your localhost. You should now see the active link highlighted in blue.
 
+___
+
+## 6. Setting Up Your Database
+
+Before you can continue working on your dashboard, you'll need some data. In this chapter, you'll be setting up a PostgreSQL database using @vercel/postgres.
+
+### a. Create a GitHub repository
+To start, let's push your repository to Github if you haven't done so already. This will make it easier to set up your database and deploy.
+
+### b. Create a Vercel account
+
+### c. Connect and deploy your project
+
+Next, you'll be taken to this screen where you can select and import the GitHub repository you've just created:
+![Alt text](image-2.png)
+
+Name your project and click Deploy.
+![Alt text](image-3.png)
+
+Hooray! 🎉 Your project is now deployed.
+![Alt text](image-4.png)
+
+By connecting your GitHub repository, whenever you push changes to your main branch, Vercel will automatically redeploy your application with no configuration needed. When opening pull requests, you'll also have instant previews which allow you to catch deployment errors early and share a preview of your project with team members for feedback.
+
+
+### d. Create a Postgres database
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
