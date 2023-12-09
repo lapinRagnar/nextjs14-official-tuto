@@ -333,12 +333,75 @@ By connecting your GitHub repository, whenever you push changes to your main bra
 
 
 ### d. Create a Postgres database
+Next, to set up a database, click Continue to Dashboard and select the Storage tab from your project dashboard. Select Connect Store → Create New → Postgres → Continue.
+
+![Alt text](image-5.png)
+
+Once connected, navigate to the .env.local tab, click Show secret and Copy Snippet. Make sure you reveal the secrets before copying them.
+
+![Alt text](image-6.png)
+
+Navigate to your code editor and rename the .env.example file to .env. Paste in the copied contents from Vercel.
+
+Important: Go to your .gitignore file and make sure .env is in the ignored files to prevent your database secrets from being exposed when you push to GitHub.
+
+Finally, run 
+```cmd
+npm i @vercel/postgres 
+```
+
+in your terminal to install the Vercel Postgres SDK.
 
 
+### e. Seed your database
+
+Now that your database has been created, let's seed it with some initial data. This will allow you to have some data to work with as you build the dashboard.
+
+In the /scripts folder of your project, there's a file called seed.js. This script contains the instructions for creating and seeding the invoices, customers, user, revenue tables.
+
+Don't worry if you don't understand everything the code is doing, but to give you an overview, the script uses SQL to create the tables, and the data from placeholder-data.js file to populate them after they've been created.
+
+Next, in your package.json file, add the following line to your scripts:
 
 
+> /package.json
+```{.typescript .numberLines .lineAnchors highlight=[5]} 
+"scripts": {
+  "build": "next build",
+  "dev": "next dev",
+  "start": "next start",
+  "seed": "node -r dotenv/config ./scripts/seed.js"
+},
 
 
+```
+
+puis,
+
+Now, run npm run seed. You should see some console.log messages in your terminal to let you know the script is running.
+
+```cmd
+npm run seed
+```
+
+### f. Exploring your database
+Let's see what your database looks like. Go back to Vercel, and click Data on the sidenav.
+
+In this section, you'll find the four new tables: users, customers, invoices, and revenue.
+![Alt text](image-7.png)
+
+
+### g. Executing queries
+You can switch to the "query" tab to interact with your database. This section supports standard SQL commands. For instance, inputting DROP TABLE customers will delete "customers" table along with all its data - so be careful!
+
+Let's run your first database query. Paste and run the following SQL code into the Vercel interface:
+
+```sql
+SELECT invoices.amount, customers.name
+FROM invoices
+JOIN customers ON invoices.customer_id = customers.id
+WHERE invoices.amount = 666;
+```
 
 
 
