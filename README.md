@@ -10,5 +10,10 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 npx create-next-app@latest nextjs-dashboard --use-npm --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example"
 ```
 
+### 1.2 configurer typescipt avec vscode
 
+![Alt text](image.png)
+
+
+## 2 css styling
 
