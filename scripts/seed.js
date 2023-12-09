@@ -5,7 +5,7 @@ const {
   revenue,
   users,
 } = require('../app/lib/placeholder-data.js');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 // import { db } from '@vercel/postgres'
 // import {invoices, customers, revenue, users,} from '@/app/lib/placeholder-data' 
