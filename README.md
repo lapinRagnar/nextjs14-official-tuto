@@ -560,8 +560,64 @@ User-Specific Content - It's easier to serve personalized content, such as dashb
 Request Time Information - Dynamic rendering allows you to access information that can only be known at request time, such as cookies or the URL search parameters.
 
 
+## 9. straming
+
+### a. What is streaming?
+Streaming is a data transfer technique that allows you to break down a route into smaller "chunks" and progressively stream them from the server to the client as they become ready.
+
+By streaming, you can prevent slow data requests from blocking your whole page. This allows the user to see and interact with parts of the page without waiting for all the data to load before any UI can be shown to the user.
+
+Streaming works well with React's component model, as each component can be considered a chunk.
+
+There are two ways you implement streaming in Next.js:
+
+- At the page level, with the loading.tsx file.
+- For specific components, with <Suspense>.
+Let's see how this works.
 
 
+### b. Streaming a whole page with loading.tsx
+In the /app/dashboard folder, create a new file called loading.tsx:
+
+
+> /app/dashboard/loading.tsx
+```{.typescript .numberLines .lineAnchors highlight=[1-3]} 
+
+export default function Loading() {
+  return <div>Loading...</div>;
+}
+
+```
+
+### c. Adding loading skeletons
+A loading skeleton is a simplified version of the UI. Many websites use them as a placeholder (or fallback) to indicate to users that the content is loading. Any UI you embed into loading.tsx will be embedded as part of the static file, and sent first. Then, the rest of the dynamic content will be streamed from the server to the client.
+
+Inside your loading.tsx file, import a new component called <DashboardSkeleton>:
+
+
+> /app/dashboard/loading.tsx
+```{.typescript .numberLines .lineAnchors highlight=[1, 4]} 
+
+import DashboardSkeleton from '@/app/ui/skeletons';
+ 
+export default function Loading() {
+  return <DashboardSkeleton />;
+}
+
+```
+
+Then, refresh http://localhost:3000/dashboard, and you should now see:
+
+![Alt text](image-9.png)
+
+
+### d. Fixing the loading skeleton bug with route groups
+Right now, your loading skeleton will apply to the invoices and customers pages as well.
+
+Since loading.tsx is a level higher than /invoices/page.tsx and /customers/page.tsx in the file system, it's also applied to those pages.
+
+We can change this with Route Groups. Create a new folder called /(overview) inside the dashboard folder. Then, move your loading.tsx and page.tsx files inside the folder:
+![Alt text](image-10.png)
 
 
 
@@ -583,6 +639,7 @@ Request Time Information - Dynamic rendering allows you to access information th
 
 
 ***
+
 
 
 
