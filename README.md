@@ -620,6 +620,10 @@ We can change this with Route Groups. Create a new folder called /(overview) ins
 ![Alt text](image-10.png)
 
 
+## 10. partial prerendering
+
+
+## 11. Adding Search and Pagination
 
 
 
