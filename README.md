@@ -404,6 +404,171 @@ WHERE invoices.amount = 666;
 ```
 
 
+## 7. Fetching Data
+
+### a. Choosing how to fetch data
+API layer
+APIs are an intermediary layer between your application code and database. There are a few cases where you might use an API:
+
+If you're using 3rd party services that provide an API.
+If you're fetching data from the client, you want to have an API layer that runs on the server to avoid exposing your database secrets to the client.
+In Next.js, you can create API endpoints using Route Handlers.
+
+Database queries
+When you're creating a full-stack application, you'll also need to write logic to interact with your database. For relational databases like Postgres, you can do this with SQL, or an ORM like Prisma.
+
+There are a few cases where you have to write database queries:
+
+When creating your API endpoints, you need to write logic to interact with your database.
+If you are using React Server Components (fetching data on the server), you can skip the API layer, and query your database directly without risking exposing your database secrets to the client.
+
+### b. Using Server Components to fetch data
+By default, Next.js applications use React Server Components. Fetching data with Server Components is a relatively new approach and there are a few benefits of using them:
+Server Components support promises, providing a simpler solution for asynchronous tasks like data fetching. You can use async/await syntax without reaching out for useEffect, useState or data fetching libraries.
+Server Components execute on the server, so you can keep expensive data fetches and logic on the server and only send the result to the client.
+As mentioned before, since Server Components execute on the server, you can query the database directly without an additional API layer.
+
+### c. Using SQL
+For your dashboard project, you'll write database queries using the Vercel Postgres SDK and SQL. There are a few reasons why we'll be using SQL:
+
+SQL is the industry standard for querying relational databases (e.g. ORMs generate SQL under the hood).
+Having a basic understanding of SQL can help you understand the fundamentals of relational databases, allowing you to apply your knowledge to other tools.
+SQL is versatile, allowing you to fetch and manipulate specific data.
+The Vercel Postgres SDK provides protection against SQL injections.
+Don't worry if you haven't used SQL before - we have provided the queries for you.
+
+Go to /app/lib/data.ts, here you'll see that we're importing the sql function from @vercel/postgres. This function allows you to query your database:
+
+> /app/lib/data.ts
+```{.typescript .numberLines .lineAnchors highlight=[1]} 
+import { sql } from '@vercel/postgres';
+ 
+// ...
+
+```
+
+
+### d. Fetching data for the dashboard overview page
+Now that you understand different ways of fetching data, let's fetch data for the dashboard overview page. Navigate to /app/dashboard/page.tsx, paste the following code, and spend some time exploring it:
+
+
+> /app/dashboard/page.tsx
+```{.typescript .numberLines .lineAnchors highlight=[]} 
+
+import { Card } from '@/app/ui/dashboard/cards';
+import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import { lusitana } from '@/app/ui/fonts';
+ 
+export default async function Page() {
+  return (
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Dashboard
+      </h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* <Card title="Collected" value={totalPaidInvoices} type="collected" /> */}
+        {/* <Card title="Pending" value={totalPendingInvoices} type="pending" /> */}
+        {/* <Card title="Total Invoices" value={numberOfInvoices} type="invoices" /> */}
+        {/* <Card
+          title="Total Customers"
+          value={numberOfCustomers}
+          type="customers"
+        /> */}
+      </div>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        {/* <RevenueChart revenue={revenue}  /> */}
+        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
+      </div>
+    </main>
+  );
+}
+
+```
+
+In the code above:
+
+Page is an async component. This allows you to use await to fetch data.
+There are also 3 components which receive data: <Card>, <RevenueChart>, and <LatestInvoices>. They are currently commented out to prevent the application from erroring.
+
+### e. Fetching data for <RevenueChart/>
+
+To fetch data for the <RevenueChart/> component, import the fetchRevenue function from data.ts and call it inside your component:
+
+
+> /app/dashboard/page.tsx
+```{.typescript .numberLines .lineAnchors highlight=[5, 8, 26]} 
+
+import { Card } from '@/app/ui/dashboard/cards';
+import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import { lusitana } from '@/app/ui/fonts';
+import { fetchRevenue } from '@/app/lib/data';
+ 
+export default async function Page() {
+  const revenue = await fetchRevenue();
+
+  return (
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Dashboard
+      </h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* <Card title="Collected" value={totalPaidInvoices} type="collected" /> */}
+        {/* <Card title="Pending" value={totalPendingInvoices} type="pending" /> */}
+        {/* <Card title="Total Invoices" value={numberOfInvoices} type="invoices" /> */}
+        {/* <Card
+          title="Total Customers"
+          value={numberOfCustomers}
+          type="customers"
+        /> */}
+      </div>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        <RevenueChart revenue={revenue}  />
+        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
+      </div>
+    </main>
+  )
+
+}
+
+```
+
+Then, uncomment the <RevenueChart/> component, navigate to the component file (/app/ui/dashboard/revenue-chart.tsx) and uncomment the code inside it. Check your localhost, you should be able to see a chart that uses revenue data.
+
+![Alt text](image-8.png)
+
+### f. Fetching data for <LatestInvoices/>
+For the <LatestInvoices /> component, we need to get the latest 5 invoices, sorted by date.
+
+You could fetch all the invoices and sort through them using JavaScript. This isn't a problem as our data is small, but as your application grows, it can significantly increase the amount of data transferred on each request and the JavaScript required to sort through it.
+
+Instead of sorting through the latest invoices in-memory, you can use an SQL query to fetch only the last 5 invoices. For example, this is the SQL query from your data.ts file:
+
+
+
+## 8. static && dynamic rendering 
+
+### a. What is Static Rendering?
+With static rendering, data fetching and rendering happens on the server at build time (when you deploy) or during revalidation. The result can then be distributed and cached in a Content Delivery Network (CDN).
+
+### b. What is Dynamic Rendering?
+With dynamic rendering, content is rendered on the server for each user at request time (when the user visits the page). There are a couple of benefits of dynamic rendering:
+
+Real-Time Data - Dynamic rendering allows your application to display real-time or frequently updated data. This is ideal for applications where data changes often.
+User-Specific Content - It's easier to serve personalized content, such as dashboards or user profiles, and update the data based on user interaction.
+Request Time Information - Dynamic rendering allows you to access information that can only be known at request time, such as cookies or the URL search parameters.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
