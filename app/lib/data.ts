@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql } from '@vercel/postgres'
 import {
   CustomerField,
   CustomersTableType,
@@ -8,7 +8,8 @@ import {
   User,
   Revenue,
 } from './definitions';
-import { formatCurrency } from './utils';
+import { formatCurrency } from './utils'
+
 
 export async function fetchRevenue() {
   // Add noStore() here prevent the response from being cached.
